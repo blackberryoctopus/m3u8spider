@@ -5,6 +5,9 @@ use warnings;
 use Data::Dumper;
 use WWW::Mechanize;
 
+sub writeFile{
+	
+}
 
 my $url = $ARGV[0];
 my @rootURL = $url =~/http.*\//g;
@@ -15,9 +18,12 @@ $m->get($url);
 my $masterManifestContent = $m->content;
 $m->success or die "Can't access $url.";
 
+open (FILE, '>>master.m3u8'); 
+print FILE $masterManifestContent; 
+close (FILE);
 
 
-print "content is: ".Dumper $masterManifestContent;
+
 
 my @Variantm3u8s = $masterManifestContent =~ /.*\.m3u8/g;
 
