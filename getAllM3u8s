@@ -15,6 +15,7 @@ $m->get($url, ':content_file'=>'master.m3u8');
 $m->success or die "Can't access $url.";
 
 my $content = $m->content;
+print Dumper $content;
 
 my @Variantm3u8s = $content =~ /.*\.m3u8/g;
 
