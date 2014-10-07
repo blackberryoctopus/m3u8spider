@@ -58,37 +58,3 @@ foreach my $m3u8URL (@Variantm3u8s){
 	}
 
 }
-
-
-#my @lines = split /\n/, $m->content;
-#for my $line ( @lines ) {
-#
-#	if($line =~ /EXTINF/ )
-#	{
-#
-#		
-#		if($line =~ /\:0/)
-#		{
-#			print "Variant List contains 0s segment: ".$variantList." -- ".$line."\n";
-#		}
-#		
-#		
-#		
-#	}
-#}	
-#	
-#	my @rootURL = $url =~ /(http.*\/).*\.m3u8/g;
-# 	print Dumper($rootURL);
-#print $m3u8."\n";	
-
-
-#	print "Getting file:  ".$m3u8."\n";
-#	$m->get($m3u8);
-#	$m->success or die "Can't access $m3u8.\n";
-
-	
-	
-#}
-
-
-
