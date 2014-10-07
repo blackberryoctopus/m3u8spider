@@ -22,10 +22,7 @@ $m->get($url);
 my $masterManifestContent = $m->content;
 $m->success or die "Can't access $url.";
 
-
 &writeFile( "master.m3u8", $masterManifestContent);
-
-
 
 my @Variantm3u8s = $masterManifestContent =~ /.*\.m3u8/g;
 
@@ -52,15 +49,9 @@ foreach my $m3u8URL (@Variantm3u8s){
 	my $baseURL = 'http://'.$1;
 	
 	foreach my $tsFileName (@tsFileNames){
-		
-		
 		my $tsURL = $baseURL.$tsFileName;
 		print Dumper $tsURL;
-		$m->get($tsURL, ':content_file'=>$tsFileName);
-		
-		
-		
-		
+		$m->get($tsURL, ':content_file'=>$tsFileName);		
 	}
 
 }
