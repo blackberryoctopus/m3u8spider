@@ -58,3 +58,7 @@ foreach my $m3u8URL (@Variantm3u8s){
 	}
 
 }
+
+#TODO
+#download files to named directory
+#handle VARIANT manifests with both absolute and relative ts chunk locations
