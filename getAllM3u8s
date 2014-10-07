@@ -11,21 +11,23 @@ my @rootURL = $url =~/http.*\//g;
 my $root = $rootURL[0];
 
 my $m = WWW::Mechanize->new( agent => "Linux Mozilla", autocheck => 1 );
-$m->get($url, ':content_file'=>'master.m3u8');
+$m->get($url);
+my $masterManifestContent = $m->content;
 $m->success or die "Can't access $url.";
 
-my $content = $m->content;
-print Dumper $content;
 
-my @Variantm3u8s = $content =~ /.*\.m3u8/g;
+
+print "content is: ".Dumper $masterManifestContent;
+
+my @Variantm3u8s = $masterManifestContent =~ /.*\.m3u8/g;
 
 my $variantURL = $url =~ /http:.*\/\/(.*\/)/g;
 my $baseVariantURL = 'http://'.$1;
-print Dumper $baseVariantURL;
+print "baseVariantURL is ".Dumper $baseVariantURL;
 
 foreach my $m3u8URL (@Variantm3u8s){
 	my $m3u8 = $baseVariantURL."$m3u8URL";
-	#print Dumper $m3u8;
+	
 	$m->get($m3u8);
 	$m->success or die "Can't access $m3u8.";
 
