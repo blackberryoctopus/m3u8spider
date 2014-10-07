@@ -6,7 +6,11 @@ use Data::Dumper;
 use WWW::Mechanize;
 
 sub writeFile{
-	
+	my $fileName = $_[0];
+	my $fileContent = $_[1];
+	open FILE, ">>$fileName";
+	print FILE $fileContent;
+	close FILE
 }
 
 my $url = $ARGV[0];
@@ -18,10 +22,8 @@ $m->get($url);
 my $masterManifestContent = $m->content;
 $m->success or die "Can't access $url.";
 
-open (FILE, '>>master.m3u8'); 
-print FILE $masterManifestContent; 
-close (FILE);
 
+&writeFile( "master.m3u8", $masterManifestContent);
 
 
 
@@ -43,9 +45,7 @@ foreach my $m3u8URL (@Variantm3u8s){
 	mkdir $directory, 0777;
 
 	my $filename = $m3u8 =~ /\/([^\/]*)$/;
-	open FILE, '>>', './'.$directory.'/'.$1;
-	print FILE $m->content; 
-	close (FILE);
+	&writeFile( './'.$directory.'/'.$1, $m->content);
 
 	my @tsFileNames = $m->content =~ /.*\.ts/g;
 	my $url = $m3u8 =~ /http:.*\/\/(.*\/)/g;
