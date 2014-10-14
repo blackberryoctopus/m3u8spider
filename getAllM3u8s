@@ -16,8 +16,6 @@ sub writeFile{
 die "Usage: getAllM3u8s <url>" unless length $ARGV[0];
 
 my $url = $ARGV[0];
-my @rootURL = $url =~/http.*\//g;
-my $root = $rootURL[0];
 
 my $m = WWW::Mechanize->new( agent => "Linux Mozilla", autocheck => 1 );
 $m->get($url);
