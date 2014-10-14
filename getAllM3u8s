@@ -49,8 +49,8 @@ foreach my $m3u8URL (@Variantm3u8s){
 	&writeFile( './'.$directory.'/'.$1, $m->content);
 
 	my @tsFileNames = $m->content =~ /.*\.ts/g;
-	my $url = $m3u8 =~ /http:.*\/\/(.*\/)/g;
-	my $baseURL = 'http://'.$1;
+	my $url = $m3u8 =~ /(http:.*\/\/.*\/)/;
+	my $baseURL = $1;
 	
 	foreach my $tsFileName (@tsFileNames){
 		my $tsURL = $baseURL.$tsFileName;
