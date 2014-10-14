@@ -35,9 +35,18 @@ my @Variantm3u8s = $masterManifestContent =~ /.*\.m3u8/g;
 
 my $variantURL = $url =~ /(http:.*\/\/.*\/)/;
 my $baseVariantURL=$1;
-
+my $m3u8='';
 foreach my $m3u8URL (@Variantm3u8s){
-	my $m3u8 = $baseVariantURL."$m3u8URL";
+	
+	
+	#figure out if the captured m3u8 string from the master manifest is absolute or relative
+	if(index($m3u8URL, "http:")==-1){
+		$m3u8 = $baseVariantURL."$m3u8URL";
+	}
+	elsif(index($m3u8URL, "http:")!=-1){
+		$m3u8 = $m3u8URL;
+	}
+	
 	
 	$m->get($m3u8);
 	$m->success or die "Can't access $m3u8.";
@@ -55,7 +64,7 @@ foreach my $m3u8URL (@Variantm3u8s){
 	foreach my $tsFileName (@tsFileNames){
 		my $tsURL='';
 		
-		
+		#figure out if the captured ts file string from the master manifest is absolute or relative
 		if(index($tsFileName, "http:") == -1){
 			$tsURL = $baseURL.$tsFileName;
 		 }
@@ -70,5 +79,27 @@ foreach my $m3u8URL (@Variantm3u8s){
 }
 
 #TODO
+#Handle Master m3u8 files whose VARIANT m3u8s all share the same name.
 
-#handle VARIANT manifests with both absolute and relative ts chunk locations
+##EXTM3U
+##EXT-X-STREAM-INF:PROGRAM-ID=1, BANDWIDTH=461567
+#http://cdn.video.abc.com/abcvideo/video_fep/h264_segmented_rev2/Preroll_prerolllexuscthybrid_20110224_3576312/440/prog_index.m3u8
+##EXT-X-STREAM-INF:PROGRAM-ID=1, BANDWIDTH=675823
+#http://cdn.video.abc.com/abcvideo/video_fep/h264_segmented_rev2/Preroll_prerolllexuscthybrid_20110224_3576312/640/prog_index.m3u8
+##EXT-X-STREAM-INF:PROGRAM-ID=1, BANDWIDTH=855972
+#http://cdn.video.abc.com/abcvideo/video_fep/h264_segmented_rev2/Preroll_prerolllexuscthybrid_20110224_3576312/840/prog_index.m3u8
+##EXT-X-STREAM-INF:PROGRAM-ID=1, BANDWIDTH=913617
+#http://cdn.video.abc.com/abcvideo/video_fep/h264_segmented_rev2/Preroll_prerolllexuscthybrid_20110224_3576312/1140/prog_index.m3u8
+##EXT-X-STREAM-INF:PROGRAM-ID=1, BANDWIDTH=1011323
+#http://cdn.video.abc.com/abcvideo/video_fep/h264_segmented_rev2/Preroll_prerolllexuscthybrid_20110224_3576312/1600/prog_index.m3u8
+##EXT-X-STREAM-INF:PROGRAM-ID=1, BANDWIDTH=60912
+#http://cdn.video.abc.com/abcvideo/video_fep/h264_segmented_rev2/Preroll_prerolllexuscthybrid_20110224_3576312/64/prog_index.m3u8
+##EXT-X-STREAM-INF:PROGRAM-ID=1, BANDWIDTH=179999
+#http://cdn.video.abc.com/abcvideo/video_fep/h264_segmented_rev2/Preroll_prerolllexuscthybrid_20110224_3576312/140/prog_index.m3u8
+##EXT-X-STREAM-INF:PROGRAM-ID=1, BANDWIDTH=276760
+#http://cdn.video.abc.com/abcvideo/video_fep/h264_segmented_rev2/Preroll_prerolllexuscthybrid_20110224_3576312/240/prog_index.m3u8
+##EXT-X-STREAM-INF:PROGRAM-ID=1, BANDWIDTH=1705738
+#http://cdn.video.abc.com/abcvideo/video_fep/h264_segmented_rev2/Preroll_prerolllexuscthybrid_20110224_3576312/2000/prog_index.m3u8
+##EXT-X-STREAM-INF:PROGRAM-ID=1, BANDWIDTH=1975065
+#http://cdn.video.abc.com/abcvideo/video_fep/h264_segmented_rev2/Preroll_prerolllexuscthybrid_20110224_3576312/2500/prog_index.m3u8
+#
