@@ -28,8 +28,10 @@ $m->success or die "Can't access $url.";
 
 my @Variantm3u8s = $masterManifestContent =~ /.*\.m3u8/g;
 
-my $variantURL = $url =~ /http:.*\/\/(.*\/)/g;
-my $baseVariantURL = 'http://'.$1;
+my $variantURL = $url =~ /(http:.*\/\/.*\/)/;
+my $baseVariantURL=$1;
+
+
 print "baseVariantURL is ".Dumper $baseVariantURL;
 
 foreach my $m3u8URL (@Variantm3u8s){
